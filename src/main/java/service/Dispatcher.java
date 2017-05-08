@@ -110,12 +110,12 @@ public class Dispatcher implements Runnable{
             synchronized (employeeAvailable) {
                 try {
                     employeeAvailable.wait();
+                    if(pendientCalls.peek()!=null){
+                        dispatchCall(pendientCalls.poll());
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-            }
-            if(pendientCalls.peek()!=null){
-                dispatchCall(pendientCalls.poll());
             }
         }
     }
